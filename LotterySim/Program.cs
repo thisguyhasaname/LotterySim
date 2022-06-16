@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Diagnostics;
 
-namespace Lottery
+namespace ConsoleApplication1
 {
     class Program
     {
@@ -33,7 +33,7 @@ namespace Lottery
             while (true)
             {
                 runs1++;
-                int coin1 = random.Next(0, 292201338);
+                long coin1 = random.NextInt64(0, 21474836470);
                 if (coin1 == 0)
                 {
                     allAttempts[index] = runs1;
