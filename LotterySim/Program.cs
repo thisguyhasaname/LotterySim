@@ -10,19 +10,27 @@ namespace Lottery
 {
     class Program
     {
+        public static int activeThreadCount = 0;
+        public static int totalThreadCount = 0;
         public static int attempts = 1600;
         public static double[] allAttempts = new double[attempts];
         public static string display = "";
         public static int togo = attempts;
         public static Stopwatch SW = new();
+        
         static void Main(string[] args)
         {
             SW.Start();
-            for (int i = 0; i < allAttempts.Length; i++)
+            while (totalThreadCount < attempts)
             {
-                int temp = i;
-                Thread my_thread = new(() => startZero(temp));
-                my_thread.Start();
+                while (activeThreadCount < 32)
+                {
+                    Thread my_thread = new(() => startZero(totalThreadCount));
+                    my_thread.Start();
+                    totalThreadCount++;
+                    activeThreadCount++;
+                } 
+                
             }
         }
         static void startZero(int index)
@@ -52,6 +60,7 @@ namespace Lottery
                     {
                         Console.WriteLine("Thread #" + index + " finished after " + runs1 + " runs");
                     }
+                    activeThreadCount--;
                     break;
                 }
             }
