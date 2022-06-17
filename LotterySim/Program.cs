@@ -23,7 +23,7 @@ namespace Lottery
             SW.Start();
             while (totalThreadCount < attempts)
             {
-                while (activeThreadCount < 32)
+                while (activeThreadCount < 32 && totalThreadCount < attempts)
                 {
                     Thread my_thread = new(() => startZero(totalThreadCount));
                     my_thread.Start();
@@ -35,7 +35,7 @@ namespace Lottery
         }
         static void startZero(int index)
         {
-            Console.WriteLine("Starting thread #" + index);
+            Console.WriteLine("Starting thread #" + index + " " + activeThreadCount + " threads are active");
             double runs1 = 0;
             Random random = new();
             while (true)
