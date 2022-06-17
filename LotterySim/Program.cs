@@ -12,7 +12,7 @@ namespace Lottery
     {
         public static int activeThreadCount = 0;
         public static int totalThreadCount = 0;
-        public static int attempts = 1600;
+        public static int attempts = 10;
         public static double[] allAttempts = new double[attempts];
         public static string display = "";
         public static int togo = attempts;
@@ -23,17 +23,16 @@ namespace Lottery
             SW.Start();
             while (totalThreadCount < attempts)
             {
-                while (activeThreadCount < 32 && totalThreadCount < attempts)
+                if (activeThreadCount < 32)
                 {
-                    Thread my_thread = new(() => startZero(totalThreadCount));
+                    Thread my_thread = new(() => StartZero(totalThreadCount));
                     my_thread.Start();
                     totalThreadCount++;
                     activeThreadCount++;
-                } 
-                
+                }
             }
         }
-        static void startZero(int index)
+        static void StartZero(int index)
         {
             Console.WriteLine("Starting thread #" + index + " " + activeThreadCount + " threads are active");
             double runs1 = 0;
@@ -44,6 +43,7 @@ namespace Lottery
                 int coin1 = random.Next(0, 292201338);
                 if (coin1 == 0)
                 {
+                    Console.WriteLine("adding " + runs1 + " to allattempts[" + index + "]");
                     allAttempts[index] = runs1;
                     togo--;
                     if (togo == 0)
